@@ -2,11 +2,14 @@
 #include"TextureManager.h"
 #include"Components.h"
 #include"Map.h"
+#include<ctime>
 
 SDL_Renderer* Game::renderer = nullptr;
 Map* map;
 Manager manager;
+Manager mManager;
 auto& Player(manager.addEntity());
+auto& enemy(mManager.addEntity());
 
 SDL_Event Game::event;
 Game::Game()
@@ -39,7 +42,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, in
 		Player.addComponent<TransformComponent>();
 		Player.addComponent<SpriteComponent>("death-removebg-preview.png");
 		Player.addComponent<KeyBoardController>();
-
+		enemy.addComponent<TransformComponent>(200, 200);
+		enemy.addComponent<SpriteComponent>("death-removebg-preview.png");
 	}
 	else {
 		isRunning = 0;
@@ -48,10 +52,10 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, in
 
 void Game::update()
 {
-
+	 
+	
 	manager.refresh();
 	manager.update();
-
 	
 
 };
@@ -73,6 +77,15 @@ void Game::render() {
 	SDL_RenderClear(renderer);
 	map->DrawMap();
 	manager.draw();
+	for (int i = 1; i <= 10; i++)
+	{
+		srand(time(NULL));
+		int a = rand() % 10;
+		int b = rand() % 10;
+		
+		mManager.update();
+		mManager.draw();
+	}
 	SDL_RenderPresent(renderer);
 }
 

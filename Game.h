@@ -21,9 +21,11 @@ public:
 	}
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
+	
 private:
-	bool isRunning = 1;
 	SDL_Window* gWindow = NULL;
+	bool isRunning = 1;
+	
 
 
 };
