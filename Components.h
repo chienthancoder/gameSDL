@@ -3,3 +3,6 @@
 #include"TransformComponent.h"
 #include"SpriteComponent.h"
 #include"KeyBoardController.h"
+#include"ColliderComponent.h"
+#include"life.h"
+#include"Shot.h"

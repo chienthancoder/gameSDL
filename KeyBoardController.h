@@ -7,9 +7,14 @@ class KeyBoardController : public Component
 {
 public:
 	TransformComponent* transform;
+	SpriteComponent* sprite;
+
+
 	void init() override
 	{
 		transform = &entity->getComponent<TransformComponent>();
+		sprite = &entity->getComponent<SpriteComponent>();
+	
 	}
 
 	void update() override
@@ -40,8 +45,11 @@ public:
 					transform->velocity.x = 0;
 				}
 				else
-				transform->velocity.x = -1;
-				break;
+				{
+					sprite->spriteflip = SDL_FLIP_HORIZONTAL;
+					transform->velocity.x = -1;
+					break;
+				}
 			case SDLK_d:
 				if (transform->position.x >= 700)
 				{
@@ -58,15 +66,19 @@ public:
 			switch (Game::event.key.keysym.sym)
 			{
 			case SDLK_w:
+				sprite->spriteflip = SDL_FLIP_NONE;
 				transform->velocity.y = 0;
 				break;
 			case SDLK_s:
+				sprite->spriteflip = SDL_FLIP_NONE;
 				transform->velocity.y = 0;
 				break;
 			case SDLK_a:
+				sprite->spriteflip = SDL_FLIP_NONE;
 				transform->velocity.x = 0;
 				break;
 			case SDLK_d:
+				sprite->spriteflip = SDL_FLIP_NONE;
 				transform->velocity.x = 0;
 				break;
 			default:

@@ -8,6 +8,10 @@
 	return tex;
 }
 
+ void texturemanager::draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect dest,SDL_RendererFlip spriteflip)
+ {
+	 SDL_RenderCopyEx(Game::renderer, tex, &src, &dest, NULL, NULL, spriteflip);
+ }
  void texturemanager::Draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect dest)
  {
 	 SDL_RenderCopy(Game::renderer, tex, &src, &dest);

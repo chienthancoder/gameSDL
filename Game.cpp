@@ -1,17 +1,19 @@
 #include"Game.h"
 #include"TextureManager.h"
-#include"Components.h"
 #include"Map.h"
 #include<ctime>
+#include"Components.h"
+#include"Collision.h"
+#include"ECS.h"
 
 SDL_Renderer* Game::renderer = nullptr;
 Map* map;
 Manager manager;
-Manager mManager;
-auto& Player(manager.addEntity());
-auto& enemy(mManager.addEntity());
+auto& player(manager.addEntity());
+auto& wall(manager.addEntity());
 
 SDL_Event Game::event;
+bool Game::isRunning;
 Game::Game()
 {};
 
@@ -22,6 +24,7 @@ Game::~Game()
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, int fullscreen)
 {
+	
 	int flags = 0;
 	if (fullscreen == 1) {
 		flags = SDL_WINDOW_FULLSCREEN;
@@ -39,11 +42,14 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, in
 		}
 		isRunning = 1;
 		map = new Map();
-		Player.addComponent<TransformComponent>();
-		Player.addComponent<SpriteComponent>("death-removebg-preview.png");
-		Player.addComponent<KeyBoardController>();
-		enemy.addComponent<TransformComponent>(200, 200);
-		enemy.addComponent<SpriteComponent>("death-removebg-preview.png");
+		player.addComponent<TransformComponent>();
+		player.addComponent<SpriteComponent>("aniamtion-removebg-preview.png", 4, 150);
+		player.addComponent<KeyBoardController>();
+		player.addComponent<ColliderComponent>("player");
+		player.addComponent<LifeOfEntiy>(100);
+		player.addComponent<shot>();
+		
+
 	}
 	else {
 		isRunning = 0;
@@ -56,6 +62,15 @@ void Game::update()
 	
 	manager.refresh();
 	manager.update();
+
+	/*if (Collision::AABB(player.getComponent<ColliderComponent>().rec, wall.getComponent<ColliderComponent>().rec))
+	{
+		std::cout << "Hit" << std::endl; 
+		player.getComponent<LifeOfEntiy>().hp--;
+
+		std::cout << player.getComponent<LifeOfEntiy>().hp;
+	}*/
+		
 	
 
 };
@@ -77,15 +92,6 @@ void Game::render() {
 	SDL_RenderClear(renderer);
 	map->DrawMap();
 	manager.draw();
-	for (int i = 1; i <= 10; i++)
-	{
-		srand(time(NULL));
-		int a = rand() % 10;
-		int b = rand() % 10;
-		
-		mManager.update();
-		mManager.draw();
-	}
 	SDL_RenderPresent(renderer);
 }
 

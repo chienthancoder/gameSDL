@@ -137,8 +137,13 @@
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ColliderComponent.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="KeyBoardController.h" />
+    <ClInclude Include="life.h" />
+    <ClInclude Include="projectiles.h" />
+    <ClInclude Include="Shot.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Game.h" />
